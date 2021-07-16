@@ -30,18 +30,24 @@
           <tbody>
             <tr *ngFor= 'let salary of salaries' >
               <td>{{salary.userId}}</td>
-              <td>{{salary.companyName}}</td>
+               <td>
+              <a class='link'  (click) = 'displaySalary (salary)' (click) = 'displayDetails()'>
+                {{salary.companyName}}
+              </a></td>
               <td>{{salary.timePeriod}}</td>
               <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxMonth?.year}} {{salary?.taxYear?.year}}</td>
               <td>{{salary.salaryAmount}}</td>
               <td>{{salary.currencyCode}}</td>
               <td></td>
-              <td></td>
             </tr>
           </tbody>
         </table>
+      </div >
+
+      <div *ngIf = 'showDetails'>
+        <ad-salary-detail [salary] = 'salaryDetails' (deleteSalary) = 'onDeleteSalary($event)'></ad-salary-detail>
       </div>
-  
+
     </div>
   
   </div>
