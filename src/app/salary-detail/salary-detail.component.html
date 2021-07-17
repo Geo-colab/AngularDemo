@@ -1,0 +1,34 @@
+<div class='card'>
+    <div class='card-header'>
+      {{title + " " + salary.companyName}}
+        <div class='table-responsive'>
+            <table class='table'
+                   >
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Company</th>
+                  <th>Time Period</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+            <tbody>
+              <tr >
+                <td>{{salary.userId}}</td>
+                 <td>
+                <a >
+                  {{salary.companyName}}
+                </a></td>
+                <td>{{salary.timePeriod | timePeriod}}</td>
+                <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxMonth?.year}} {{salary?.taxYear?.year}}</td>
+                <td>{{salary.salaryAmount | currency: salary.currencyCode: 'symbol-narrow'}}</td>   
+              </tr>
+                <button id='deleteButton' (click) = 'onClickDelete(salary)'>Delete</button><button id='editButton'>Edit</button>
+            </tbody>
+          </table>
+        </div > 
+  </div>
+</div>
+
+  
