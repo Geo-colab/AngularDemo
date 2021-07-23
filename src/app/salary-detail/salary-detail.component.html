@@ -24,10 +24,16 @@
                 <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxMonth?.year}} {{salary?.taxYear?.year}}</td>
                 <td>{{salary.salaryAmount | currency: salary.currencyCode: 'symbol-narrow'}}</td>   
               </tr>
-                <button id='deleteButton' (click) = 'onClickDelete(salary)'>Delete</button><button id='editButton'>Edit</button>
+               
             </tbody>
           </table>
         </div > 
+        <div class="btn-group gap-3">
+          <button id='editButton' class="btn btn-outline-primary"
+          class="btn btn-outline-primary" 
+                [routerLink]="['/salary-add-edit', salary.id, 'edit']">Edit</button>
+          <button id='deleteButton' class="btn btn-outline-danger" (click) = 'onClickDelete(salary)'>Delete</button>         
+    </div>
   </div>
 </div>
 

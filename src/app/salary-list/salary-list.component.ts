@@ -34,6 +34,8 @@ export class SalaryListComponent implements OnInit {
     let index = this.salaries.indexOf(salary);
     if (index > -1) {
     this.salaries.splice(index, 1);
+    
+    this.showDetails = false; //Hide salary details on deletion. 
    }
 
  }

@@ -7,6 +7,9 @@ import { SalaryListComponent } from './salary-list/salary-list.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
 import { TimePeriodPipe } from './pipes/time-period.pipe';
+import { SalaryAddEditComponent } from './salary-add-edit/salary-add-edit.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -16,11 +19,13 @@ import { TimePeriodPipe } from './pipes/time-period.pipe';
     SalaryListComponent,
     WelcomeComponent,
     SalaryDetailComponent,
-    TimePeriodPipe, 
+    TimePeriodPipe,
+    SalaryAddEditComponent, 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
