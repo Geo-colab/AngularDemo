@@ -39,9 +39,11 @@
               <td>{{salary.salaryAmount}}</td>
               <td>{{salary.currencyCode}}</td>
               <td></td>
-            </tr>
+            </tr>     
           </tbody>
         </table>
+        <button class="btn btn-outline-primary"
+        [routerLink]="['/salary-add-edit/0/edit']">Add New</button>
       </div >
 
       <div *ngIf = 'showDetails'>
