@@ -9,9 +9,10 @@ import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
 import { TimePeriodPipe } from './pipes/time-period.pipe';
 import { SalaryAddEditComponent } from './salary-add-edit/salary-add-edit.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { SalaryData } from './salary-data/salary-data';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    InMemoryWebApiModule.forRoot(SalaryData),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

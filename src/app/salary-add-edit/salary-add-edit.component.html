@@ -1,11 +1,11 @@
 <div class="card">
     <div class="card-header">
-      Add Edit
+      {{title}}
     </div>
   
     <div class="card-body">
       <form novalidate
-            (ngSubmit)="save()"
+            (ngSubmit)="saveSalary()"
             [formGroup]="salaryForm">
   
            <!--Company Name text box--> 
@@ -18,16 +18,8 @@
                    type="text"
                    formControlName="companyName"
                    [ngClass]="{'is-invalid': (salaryForm.get('companyName')!.touched || salaryForm.get('companyName')!.dirty) && !salaryForm.get('companyName')!.valid }" />
-            <span class="invalid-feedback">
-              <span *ngIf="salaryForm.get('companyName')!.errors?.required">
-                Please enter your company name.
-              </span>
-              <span *ngIf="salaryForm.get('companyName')!.errors?.minlength">
-                Your company name must be more than 2 characters.
-              </span>
-              <span *ngIf="salaryForm.get('companyName')!.errors?.maxlength">
-                Your company name must be less than 100 characters.
-              </span>
+            <span class="btn-sm">
+             Please enter company name between 2 and 100 characters
             </span>
           </div>
         </div>
@@ -41,15 +33,11 @@
                    id="timePeriodId"
                    formControlName="timePeriod"
                    [ngClass]="{'is-invalid': (salaryForm.get('timePeriod')!.touched || salaryForm.get('timePeriod')!.dirty) && !salaryForm.get('timePeriod')!.valid }">
-                <option value="PY" >Enter for full Tax Year</option>
-                <option value="PM" >Enter per Month</option>
-                <option value="PD" >Enter for Specific Date</option> 
+                   <option *ngFor="let formPeriod of formPeriods" [value]="formPeriod.value">{{formPeriod.text}}</option>
                 </select>
-                <span class="invalid-feedback">
-                    <span *ngIf="salaryForm.get('timePeriod')!.errors?.required">
-                      Please choose a time period.
-                    </span>
-                  </span>
+                <span class="btn-sm">
+                  Please select a time period of payment.
+                 </span>
           </div>
         </div>
   
@@ -61,25 +49,12 @@
               <select class="form-control"
                      id="taxYearId"
                      formControlName="taxYear"
-                     required
                      [ngClass]="{'is-invalid': (salaryForm.get('taxYear')!.touched || salaryForm.get('taxYear')!.dirty) && !salaryForm.get('taxYear')!.valid }">
-                  <option value="2122">Total for 2021/2022 Tax Year</option>
-                  <option value="2021">Total for 2020/2021 Tax Year</option>
-                  <option value="1920">Total for 2019/2020 Tax Year</option>
-                  <option value="1819">Total for 2018/2019 Tax Year</option>
-                  <option value="1718">Total for 2017/2018 Tax Year</option>
-                  <option value="1617">Total for 2016/2017 Tax Year</option>
-                  <option value="1516">Total for 2015/2016 Tax Year</option>
-                  <option value="1415">Total for 2014/2015 Tax Year</option>
-                  <option value="1314">Total for 2013/2014 Tax Year</option>
-                  <option value="1213">Total for 2012/2013 Tax Year</option>
-                  <option value="1112">Total for 2011/2012 Tax Year</option>
-                  <option value="1011">Total for 2010/2011 Tax Year</option>
+                  <option *ngFor="let formYear of formYears" [value]="formYear.value">Total for {{formYear.text}} Tax Year</option>
+                
                   </select>
-                  <span class="invalid-feedback">
-                    <span *ngIf="salaryForm.get('taxYear')!.errors?.required">
-                      Please choose your year of payment.
-                    </span>
+                  <span class="btn-sm">
+                      Please select a tax year.
                   </span>
             </div>
           </div>
@@ -94,155 +69,10 @@
                      formControlName="taxMonth"
                      required
                      [ngClass]="{'is-invalid': (salaryForm.get('taxMonth')!.touched || salaryForm.get('taxMonth')!.dirty) && !salaryForm.get('taxMonth')!.valid }">
-                  <option value="Mar 2022">Total for Mar-22</option>
-                  <option value="Feb 2022">Total for Feb-22</option>
-                  <option value="Jan 2022">Total for Jan-22</option>
-                  <option value="Dec 2021">Total for Dec-21</option>
-                  <option value="Nov 2021">Total for Nov-21</option>
-                  <option value="Oct 2021">Total for Oct-21</option>
-                  <option value="Sep 2021">Total for Sep-21</option>
-                  <option value="Aug 2021">Total for Aug-21</option>
-                  <option value="Jul 2021">Total for Jul-21</option>
-                  <option value="Jun 2021">Total for Jun-21</option>
-                  <option value="May 2021">Total for May-21</option>
-                  <option value="Apr 2021">Total for Apr-21</option>
-                  <option value="Mar 2021">Total for Mar-21</option>
-                  <option value="Feb 2021">Total for Feb-21</option>
-                  <option value="Jan 2021">Total for Jan-21</option>
-                  <option value="Dec 2020">Total for Dec-20</option>
-                  <option value="Nov 2020">Total for Nov-20</option>
-                  <option value="Oct 2020">Total for Oct-20</option>
-                  <option value="Sep 2020">Total for Sep-20</option>
-                  <option value="Aug 2020">Total for Aug-20</option>
-                  <option value="Jul 2020">Total for Jul-20</option>
-                  <option value="Jun 2020">Total for Jun-20</option>
-                  <option value="May 2020">Total for May-20</option>
-                  <option value="Apr 2020">Total for Apr-20</option>
-                  <option value="Mar 2020">Total for Mar-20</option>
-                  <option value="Feb 2020">Total for Feb-20</option>
-                  <option value="Jan 2020">Total for Jan-20</option>
-                  <option value="Dec 2019">Total for Dec-19</option>
-                  <option value="Nov 2019">Total for Nov-19</option>
-                  <option value="Oct 2019">Total for Oct-19</option>
-                  <option value="Sep 2019">Total for Sep-19</option>
-                  <option value="Aug 2019">Total for Aug-19</option>
-                  <option value="Jul 2019">Total for Jul-19</option>
-                  <option value="Jun 2019">Total for Jun-19</option>
-                  <option value="May 2019">Total for May-19</option>
-                  <option value="Apr 2019">Total for Apr-19</option>
-                  <option value="Mar 2019">Total for Mar-19</option>
-                  <option value="Feb 2019">Total for Feb-19</option>
-                  <option value="Jan 2019">Total for Jan-19</option>
-                  <option value="Dec 2018">Total for Dec-18</option>
-                  <option value="Nov 2018">Total for Nov-18</option>
-                  <option value="Oct 2018">Total for Oct-18</option>
-                  <option value="Sep 2018">Total for Sep-18</option>
-                  <option value="Aug 2018">Total for Aug-18</option>
-                  <option value="Jul 2018">Total for Jul-18</option>
-                  <option value="Jun 2018">Total for Jun-18</option>
-                  <option value="May 2018">Total for May-18</option>
-                  <option value="Apr 2018">Total for Apr-18</option>
-                  <option value="Mar 2018">Total for Mar-18</option>
-                  <option value="Feb 2018">Total for Feb-18</option>
-                  <option value="Jan 2018">Total for Jan-18</option>
-                  <option value="Dec 2017">Total for Dec-17</option>
-                  <option value="Nov 2017">Total for Nov-17</option>
-                  <option value="Oct 2017">Total for Oct-17</option>
-                  <option value="Sep 2017">Total for Sep-17</option>
-                  <option value="Aug 2017">Total for Aug-17</option>
-                  <option value="Jul 2017">Total for Jul-17</option>
-                  <option value="Jun 2017">Total for Jun-17</option>
-                  <option value="May 2017">Total for May-17</option>
-                  <option value="Apr 2017">Total for Apr-17</option>
-                  <option value="Mar 2017">Total for Mar-17</option>
-                  <option value="Feb 2017">Total for Feb-17</option>
-                  <option value="Jan 2017">Total for Jan-17</option>
-                  <option value="Dec 2016">Total for Dec-16</option>
-                  <option value="Nov 2016">Total for Nov-16</option>
-                  <option value="Oct 2016">Total for Oct-16</option>
-                  <option value="Sep 2016">Total for Sep-16</option>
-                  <option value="Aug 2016">Total for Aug-16</option>
-                  <option value="Jul 2016">Total for Jul-16</option>
-                  <option value="Jun 2016">Total for Jun-16</option>
-                  <option value="May 2016">Total for May-16</option>
-                  <option value="Apr 2016">Total for Apr-16</option>
-                  <option value="Mar 2016">Total for Mar-16</option>
-                  <option value="Feb 2016">Total for Feb-16</option>
-                  <option value="Jan 2016">Total for Jan-16</option>
-                  <option value="Dec 2015">Total for Dec-15</option>
-                  <option value="Nov 2015">Total for Nov-15</option>
-                  <option value="Oct 2015">Total for Oct-15</option>
-                  <option value="Sep 2015">Total for Sep-15</option>
-                  <option value="Aug 2015">Total for Aug-15</option>
-                  <option value="Jul 2015">Total for Jul-15</option>
-                  <option value="Jun 2015">Total for Jun-15</option>
-                  <option value="May 2015">Total for May-15</option>
-                  <option value="Apr 2015">Total for Apr-15</option>
-                  <option value="Mar 2015">Total for Mar-15</option>
-                  <option value="Feb 2015">Total for Feb-15</option>
-                  <option value="Jan 2015">Total for Jan-15</option>
-                  <option value="Dec 2014">Total for Dec-14</option>
-                  <option value="Nov 2014">Total for Nov-14</option>
-                  <option value="Oct 2014">Total for Oct-14</option>
-                  <option value="Sep 2014">Total for Sep-14</option>
-                  <option value="Aug 2014">Total for Aug-14</option>
-                  <option value="Jul 2014">Total for Jul-14</option>
-                  <option value="Jun 2014">Total for Jun-14</option>
-                  <option value="May 2014">Total for May-14</option>
-                  <option value="Apr 2014">Total for Apr-14</option>
-                  <option value="Mar 2014">Total for Mar-14</option>
-                  <option value="Feb 2014">Total for Feb-14</option>
-                  <option value="Jan 2014">Total for Jan-14</option>
-                  <option value="Dec 2013">Total for Dec-13</option>
-                  <option value="Nov 2013">Total for Nov-13</option>
-                  <option value="Oct 2013">Total for Oct-13</option>
-                  <option value="Sep 2013">Total for Sep-13</option>
-                  <option value="Aug 2013">Total for Aug-13</option>
-                  <option value="Jul 2013">Total for Jul-13</option>
-                  <option value="Jun 2013">Total for Jun-13</option>
-                  <option value="May 2013">Total for May-13</option>
-                  <option value="Apr 2013">Total for Apr-13</option>
-                  <option value="Mar 2013">Total for Mar-13</option>
-                  <option value="Feb 2013">Total for Feb-13</option>
-                  <option value="Jan 2013">Total for Jan-13</option>
-                  <option value="Dec 2012">Total for Dec-12</option>
-                  <option value="Nov 2012">Total for Nov-12</option>
-                  <option value="Oct 2012">Total for Oct-12</option>
-                  <option value="Sep 2012">Total for Sep-12</option>
-                  <option value="Aug 2012">Total for Aug-12</option>
-                  <option value="Jul 2012">Total for Jul-12</option>
-                  <option value="Jun 2012">Total for Jun-12</option>
-                  <option value="May 2012">Total for May-12</option>
-                  <option value="Apr 2012">Total for Apr-12</option>
-                  <option value="Mar 2012">Total for Mar-12</option>
-                  <option value="Feb 2012">Total for Feb-12</option>
-                  <option value="Jan 2012">Total for Jan-12</option>
-                  <option value="Dec 2011">Total for Dec-11</option>
-                  <option value="Nov 2011">Total for Nov-11</option>
-                  <option value="Oct 2011">Total for Oct-11</option>
-                  <option value="Sep 2011">Total for Sep-11</option>
-                  <option value="Aug 2011">Total for Aug-11</option>
-                  <option value="Jul 2011">Total for Jul-11</option>
-                  <option value="Jun 2011">Total for Jun-11</option>
-                  <option value="May 2011">Total for May-11</option>
-                  <option value="Apr 2011">Total for Apr-11</option>
-                  <option value="Mar 2011">Total for Mar-11</option>
-                  <option value="Feb 2011">Total for Feb-11</option>
-                  <option value="Jan 2011">Total for Jan-11</option>
-                  <option value="Dec 2010">Total for Dec-10</option>
-                  <option value="Nov 2010">Total for Nov-10</option>
-                  <option value="Oct 2010">Total for Oct-10</option>
-                  <option value="Sep 2010">Total for Sep-10</option>
-                  <option value="Aug 2010">Total for Aug-10</option>
-                  <option value="Jul 2010">Total for Jul-10</option>
-                  <option value="Jun 2010">Total for Jun-10</option>
-                  <option value="May 2010">Total for May-10</option>
-                  <option value="Apr 2010">Total for Apr-10</option>  
+                     <option *ngFor="let formMonth of formMonths" [value]="formMonth.value" >Total for {{formMonth.text}}</option>
                   </select>
-                  <span class="invalid-feedback">
-                    <span *ngIf="salaryForm.get('taxMonth')!.errors?.required">
-                      Please choose your month of payment.
-                    </span>
+                  <span class="btn-sm">
+                      Please select your tax month payment was received.
                   </span>
             </div>
           </div>
@@ -255,44 +85,11 @@
               <select class="form-control"
                      id="taxDayDayId"
                      formControlName="taxDayDay"
-                     required
                      [ngClass]="{'is-invalid': (salaryForm.get('taxDayDay')!.touched || salaryForm.get('taxDayDay')!.dirty) && !salaryForm.get('taxDayDay')!.valid }">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option> 
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                  <option value="13">13</option>
-                  <option value="14">14</option>
-                  <option value="15">15</option> 
-                  <option value="16">16</option>
-                  <option value="17">17</option>
-                  <option value="18">18</option>
-                  <option value="19">19</option>
-                  <option value="20">20</option>
-                  <option value="21">21</option>
-                  <option value="22">22</option>
-                  <option value="23">23</option>
-                  <option value="24">24</option>
-                  <option value="25">25</option>
-                  <option value="26">26</option> 
-                  <option value="27">27</option>
-                  <option value="28">28</option>
-                  <option value="29">29</option>
-                  <option value="30">30</option>
-                  <option value="31">31</option>    
+                   <option *ngFor="let formDayDay of formDayDays" [value]="formDayDay.value" >{{formDayDay.text}}</option>                           
                   </select>
-                  <span class="invalid-feedback">
-                    <span *ngIf="salaryForm.get('taxDayDay')!.errors?.required">
-                      Please choose your day of payment
-                    </span>
+                  <span class="btn-sm">
+                      Day
                   </span>
                </div>
             
@@ -301,25 +98,11 @@
               <select class="form-control"
                      id="taxDayMonthId"
                      formControlName="taxDayMonth"
-                     required
                      [ngClass]="{'is-invalid': (salaryForm.get('taxDayMonth')!.touched || salaryForm.get('taxDayMonth')!.dirty) && !salaryForm.get('taxDayMonth')!.valid }">
-                  <option value="Jan">January</option>
-                  <option value="Feb">February</option>
-                  <option value="Mar">March</option>
-                  <option value="Apr">April</option>
-                  <option value="May">May</option>
-                  <option value="Jun">June</option>
-                  <option value="Jul">July</option>
-                  <option value="Aug">August</option>
-                  <option value="Sep">September</option>
-                  <option value="Oct">October</option>
-                  <option value="Nov">November</option>
-                  <option value="Dec">December</option>
+                     <option *ngFor="let formDayMonth of formDayMonths" [value]="formDayMonth.value">{{formDayMonth.text}}</option>
                   </select>
-                  <span class="invalid-feedback">
-                    <span *ngIf="salaryForm.get('taxDayMonth')!.errors?.required">
-                      Please choose your month of payment.
-                    </span>
+                  <span class="btn-sm">
+                      Month
                   </span>
             </div>
           
@@ -328,26 +111,11 @@
               <select class="form-control"
                      id="taxDayYearId"
                      formControlName="taxDayYear"
-                     required
                      [ngClass]="{'is-invalid': (salaryForm.get('taxDayYear')!.touched || salaryForm.get('taxDayYear')!.dirty) && !salaryForm.get('taxDayYear')!.valid }">
-                  <option value="2022">2022</option>
-                  <option value="2021">2021</option>
-                  <option value="2020">2020</option>
-                  <option value="2019">2019</option>
-                  <option value="2018">2018</option>
-                  <option value="2017">2017</option>
-                  <option value="2016">2016</option>
-                  <option value="2015">2015</option>
-                  <option value="2014">2014</option> 
-                  <option value="2013">2013</option>
-                  <option value="2012">2012</option>
-                  <option value="2011">2011</option>
-                  <option value="2010">2010</option>
+                     <option *ngFor="let formDayYear of formDayYears" [value]="formDayYear.value">{{formDayYear.text}}</option>
                   </select>
-                  <span class="invalid-feedback">
-                    <span *ngIf="salaryForm.get('taxDayYear')!.errors?.required">
-                      Please choose your year of payment.
-                    </span>
+                  <span class="btn-sm">
+                      Year
                   </span>
                  </div>     
             </div>
@@ -362,16 +130,8 @@
                    type="number"
                    formControlName="salaryAmount"
                    [ngClass]="{'is-invalid': (salaryForm.get('salaryAmount')!.touched || salaryForm.get('salaryAmount')!.dirty) && !salaryForm.get('salaryAmount')!.valid }" />
-            <span class="invalid-feedback">
-              <span *ngIf="salaryForm.get('salaryAmount')!.errors?.required">
-                Please enter your salary amount.
-              </span>
-              <span *ngIf="salaryForm.get('salaryAmount')!.errors?.min">
-                Please enter a number higher than 0.01.
-              </span>
-              <span *ngIf="salaryForm.get('salaryAmount')!.errors?.max">
-                Please enter a number lower than 1,000,000.
-              </span>
+            <span class="btn-sm">
+              Please enter the salary amount received.
             </span>
           </div>
         </div>
@@ -395,10 +155,8 @@
                   <option value="USD">USD</option>
                   <option value="CAD">CAD</option>
                   </select>
-                  <span class="invalid-feedback">
-                    <span *ngIf="salaryForm.get('currencyCode')!.errors?.required">
-                      Please select your salary's currency.
-                    </span>
+                  <span class="btn-sm">
+                      Please select the currency the amount was paid in.
                   </span>
             </div>
           </div>
@@ -413,7 +171,9 @@
               Save
             </button>
             <button class="btn btn-outline-secondary"
-                    type="Cancel">
+                    type="Cancel"
+                    [routerLink]="['/salary-list']">
+                    
               Cancel
             </button>
           </div>
