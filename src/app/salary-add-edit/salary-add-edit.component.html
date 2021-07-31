@@ -1,10 +1,13 @@
 <div class="card">
     <div class="card-header">
+
       {{title}}
+
     </div>
   
     <div class="card-body">
       <form novalidate
+
             (ngSubmit)="saveSalary()"
             [formGroup]="salaryForm">
   
@@ -18,6 +21,7 @@
                    type="text"
                    formControlName="companyName"
                    [ngClass]="{'is-invalid': (salaryForm.get('companyName')!.touched || salaryForm.get('companyName')!.dirty) && !salaryForm.get('companyName')!.valid }" />
+
             <span class="btn-sm">
              Please enter company name between 2 and 100 characters
             </span>
@@ -33,6 +37,7 @@
                    id="timePeriodId"
                    formControlName="timePeriod"
                    [ngClass]="{'is-invalid': (salaryForm.get('timePeriod')!.touched || salaryForm.get('timePeriod')!.dirty) && !salaryForm.get('timePeriod')!.valid }">
+
                    <option *ngFor="let formPeriod of formPeriods" [value]="formPeriod.value">{{formPeriod.text}}</option>
                 </select>
                 <span class="btn-sm">
@@ -130,6 +135,7 @@
                    type="number"
                    formControlName="salaryAmount"
                    [ngClass]="{'is-invalid': (salaryForm.get('salaryAmount')!.touched || salaryForm.get('salaryAmount')!.dirty) && !salaryForm.get('salaryAmount')!.valid }" />
+
             <span class="btn-sm">
               Please enter the salary amount received.
             </span>
@@ -155,8 +161,12 @@
                   <option value="USD">USD</option>
                   <option value="CAD">CAD</option>
                   </select>
-                  <span class="btn-sm">
-                      Please select the currency the amount was paid in.
+
+                  <span class="invalid-feedback">
+                    <span *ngIf="salaryForm.get('currencyCode')!.errors?.required">
+                      Please select your salary's currency.
+                    </span>
+
                   </span>
             </div>
           </div>
@@ -173,7 +183,6 @@
             <button class="btn btn-outline-secondary"
                     type="Cancel"
                     [routerLink]="['/salary-list']">
-                    
               Cancel
             </button>
           </div>

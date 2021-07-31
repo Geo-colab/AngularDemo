@@ -8,7 +8,6 @@ import { WelcomeComponent } from './home/welcome.component';
 import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
 import { TimePeriodPipe } from './pipes/time-period.pipe';
 import { SalaryAddEditComponent } from './salary-add-edit/salary-add-edit.component';
-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';

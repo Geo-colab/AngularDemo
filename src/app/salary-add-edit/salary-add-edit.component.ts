@@ -18,11 +18,14 @@ import { SalaryService } from '../salary-service/salary.service';
 
 export class SalaryAddEditComponent implements OnInit {
 
+
   title: string = '';
   errorMessage: string;
+
   salaryForm: FormGroup;
   salary: Salary;
   private sub: Subscription;
+
 
  //Data for form's dates and time period on form
   formPeriods: FormPeriod[] = FormPeriod.getPeriod();
@@ -216,9 +219,8 @@ export class SalaryAddEditComponent implements OnInit {
       this.errorMessage = 'Please correct the validation errors.';
     } 
 
-    console.log(this.salaryForm);
-    console.log('Saved: ' + JSON.stringify(this.salaryForm.value));
-  }
+
+
 
   // Reset the form to clear the flags
   onSaveComplete(): void {

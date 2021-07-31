@@ -7,7 +7,6 @@ import { SalaryListComponent } from './salary-list/salary-list.component';
 
 const routes: Routes = [
   { path: 'salary-list', component: SalaryListComponent },
- 
   { 
     path: 'salary-add-edit/:id/edit',
     canDeactivate: [SalaryAddEditGuard], 
