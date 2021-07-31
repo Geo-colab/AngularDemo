@@ -5,13 +5,29 @@
     <div class='card-body'>
       <div class='row'>
         <div class='col-md-2'>Filter by:</div>
-        <div class='col-md-4'>
-          <input type='text' />
+        <div class='col-md-2'>
+          <input type='text'
+                 placeholder="Company Name"
+                [(ngModel)]= 'listFilter' />
         </div>
+        <div class='col-md-2'>
+          Filter by Time Period: 
+       </div>
+        <div class='col-md-2'>
+         <button class="btn btn-outline-primary btn-sm"
+                 (click)="filterDay()">Day</button> 
       </div>
+      <div class='col-md-2'>
+        <button class="btn btn-outline-primary btn-sm"
+                (click)="filterMonth()">Month</button> 
+     </div>
+     <div class='col-md-2'>
+      <button class="btn btn-outline-primary btn-sm"
+              (click)="filterYear()">Year</button> 
+   </div>
       <div class='row'>
         <div class='col-md-6'>
-          <h4>Filtered by: </h4>
+          <h4>Company Name: {{listFilter}}</h4>
         </div>
       </div>
       <div class='table-responsive'>
@@ -28,14 +44,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor= 'let salary of salaries' >
+            <tr *ngFor= 'let salary of filteredSalaries' >
               <td>{{salary.userId}}</td>
                <td>
               <a class='link'  (click) = 'displaySalary (salary)' (click) = 'displayDetails()'>
                 {{salary.companyName}}
               </a></td>
               <td>{{salary.timePeriod}}</td>
-              <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxMonth?.year}} {{salary?.taxYear?.year}}</td>
+              <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxYear?.year}}</td>
               <td>{{salary.salaryAmount}}</td>
               <td>{{salary.currencyCode}}</td>
               <td></td>
@@ -47,7 +63,7 @@
       </div >
 
       <div *ngIf = 'showDetails'>
-        <ad-salary-detail [salary] = 'salaryDetails' (deleteSalary) = 'onDeleteSalary($event)'></ad-salary-detail>
+        <ad-salary-detail [salary] = 'salary' (delSalary) = 'deleteSalary($event)'></ad-salary-detail>
       </div>
 
     </div>

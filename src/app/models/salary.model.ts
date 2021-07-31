@@ -4,11 +4,11 @@ import { TaxYear } from "./tax-year.model";
 import { TimePeriod } from "./time-period.enum";
 
 export class Salary {
-    id: number;
+    id: number | null;
     userId: number;
     companyName: string;
     timePeriod: TimePeriod;
-    salaryAmount: number;
+    salaryAmount: number | null;
     currencyCode: string;
 
     taxDate?:TaxDate;
@@ -36,14 +36,12 @@ export class Salary {
         //tax month salary
         id++;
         let taxMonth = new TaxMonth();
-        taxMonth.month = 'Apr';
-        taxMonth.year = '2019';
+        taxMonth.month = 'Apr 2019';
         result.push(this.getTestSalary(id, userId, 'My Test Company 3', 12335.43, 'USD', TimePeriod.PerMonth, undefined, taxMonth, undefined));
 
         id++;
         taxMonth = new TaxMonth();
-        taxMonth.month = 'Apr';
-        taxMonth.year = '2019';
+        taxMonth.month = 'Apr 2019'
         result.push(this.getTestSalary(id, userId, 'My Test Company 4', 46560.23, 'GBP', TimePeriod.PerMonth, undefined, taxMonth, undefined));
 
         //tax day salary 
@@ -76,7 +74,7 @@ export class Salary {
         taxDate?:TaxDate,      
     ): Salary {
 
-        var result = new Salary();
+        let result = new Salary();
         result.id = id;
         result.userId = userId;
         result.companyName = companyName;
@@ -88,6 +86,7 @@ export class Salary {
         result.taxDate = taxDate;
 
         return result;
-
     }
+    
+   
 }

@@ -21,7 +21,7 @@
                   {{salary.companyName}}
                 </a></td>
                 <td>{{salary.timePeriod | timePeriod}}</td>
-                <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxMonth?.year}} {{salary?.taxYear?.year}}</td>
+                <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxYear?.year}}</td>
                 <td>{{salary.salaryAmount | currency: salary.currencyCode: 'symbol-narrow'}}</td>   
               </tr>
                
