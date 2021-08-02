@@ -7,6 +7,10 @@ import { FormMonth } from '../models/form-month.model';
 import { FormPeriod } from '../models/form-period.model';
 import { FormYear } from '../models/form-year.model';
 import { Salary } from '../models/salary.model';
+import { TaxDate } from '../models/tax-date.model';
+import { TaxMonth } from '../models/tax-month.model';
+import { TaxYear } from '../models/tax-year.model';
+import { TimePeriod } from '../models/time-period.enum';
 import { SalaryService } from '../salary-service/salary.service';
 
 
@@ -25,7 +29,12 @@ export class SalaryAddEditComponent implements OnInit {
   salaryForm: FormGroup;
   salary: Salary;
   private sub: Subscription;
+  private subForm?: Subscription ;
 
+  //Properties to keep selection for days
+  private daySelected: string = '';
+  private monthSelected: string = '';
+  private yearSelected: string = ''; 
 
  //Data for form's dates and time period on form
   formPeriods: FormPeriod[] = FormPeriod.getPeriod();
@@ -34,6 +43,11 @@ export class SalaryAddEditComponent implements OnInit {
   formDayDays: FormDay[] = FormDay.getDayDay();
   formDayMonths: FormDay[] = FormDay.getDayMonth();
   formDayYears: FormDay[] = FormDay.getDayYear();
+
+  //Arrays to keep days options and leap year
+  days: string[] = [];
+  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
+  years: string[] = [];
   
   constructor (private fb: FormBuilder,
                private router: Router,
@@ -56,6 +70,7 @@ export class SalaryAddEditComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    this.subForm?.unsubscribe();
   }
 
   //Create Salary Form
@@ -75,7 +90,7 @@ export class SalaryAddEditComponent implements OnInit {
     })
 
     //Set Validators for taxYear and remove Vaidators and values for other time periods
-    this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
+   this.subForm = this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
       (result: string) => {
         if(result === 'PY'){
           this.salaryForm.get('taxYear')?.setValidators(Validators.required);
@@ -88,13 +103,6 @@ export class SalaryAddEditComponent implements OnInit {
           this.salaryForm.get('taxDayMonth')?.setValue('');
           this.salaryForm.get('taxDayYear')?.setValue('');
         }
-        this.salaryForm.get('taxYear')?.updateValueAndValidity();
-      }      
-    );
-
-    //Set Validators for taxMonth and remove Vaidators and values for other time periods
-    this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
-      (result: string) => {
         if(result === 'PM'){
           this.salaryForm.get('taxYear')?.clearValidators();
           this.salaryForm.get('taxMonth')?.setValidators(Validators.required); 
@@ -106,67 +114,53 @@ export class SalaryAddEditComponent implements OnInit {
           this.salaryForm.get('taxDayMonth')?.setValue('');
           this.salaryForm.get('taxDayYear')?.setValue('');
         }
+        if(result === 'PD'){
+          this.salaryForm.get('taxYear')?.clearValidators()
+          this.salaryForm.get('taxMonth')?.clearValidators(); 
+          this.salaryForm.get('taxDayDay')?.setValidators(Validators.required);
+          this.salaryForm.get('taxDayMonth')?.setValidators(Validators.required);
+          this.salaryForm.get('taxDayYear')?.setValidators(Validators.required);
+          this.salaryForm.get('taxYear')?.setValue('');
+          this.salaryForm.get('taxMonth')?.setValue('');
+        }
+
+        this.salaryForm.get('taxYear')?.updateValueAndValidity();
         this.salaryForm.get('taxMonth')?.updateValueAndValidity();
-      }      
-    );
-
-    //Set Validators for taxDay and remove Vaidators and values for other time periods
-    this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
-      (result: string) => {
-        if(result === 'PD'){
-          this.salaryForm.get('taxYear')?.clearValidators()
-          this.salaryForm.get('taxMonth')?.clearValidators(); 
-          this.salaryForm.get('taxDayDay')?.setValidators(Validators.required);
-          this.salaryForm.get('taxDayMonth')?.setValidators(Validators.required);
-          this.salaryForm.get('taxDayYear')?.setValidators(Validators.required);
-          this.salaryForm.get('taxYear')?.setValue('');
-          this.salaryForm.get('taxMonth')?.setValue('');
-        }
         this.salaryForm.get('taxDayDay')?.updateValueAndValidity();
         this.salaryForm.get('taxDayMonth')?.updateValueAndValidity();
         this.salaryForm.get('taxDayYear')?.updateValueAndValidity();
-      }      
-    );
-
-    this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
-      (result: string) => {
-        if(result === 'PD'){
-          this.salaryForm.get('taxYear')?.clearValidators()
-          this.salaryForm.get('taxMonth')?.clearValidators(); 
-          this.salaryForm.get('taxDayDay')?.setValidators(Validators.required);
-          this.salaryForm.get('taxDayMonth')?.setValidators(Validators.required);
-          this.salaryForm.get('taxDayYear')?.setValidators(Validators.required);
-          this.salaryForm.get('taxYear')?.setValue('');
-          this.salaryForm.get('taxMonth')?.setValue('');
-        }
-        this.salaryForm.get('taxDayDay')?.updateValueAndValidity();
-        this.salaryForm.get('taxDayMonth')?.updateValueAndValidity();
-        this.salaryForm.get('taxDayYear')?.updateValueAndValidity();
-      }      
-    );
-      
-   /**EK het probeer hier om met die arrays the werk wat die drop down lists populate
-     maar niks wou werk nie wil net eers seker maak of 'n mens wel valueChanges so kan gebruik
-    */
-    //Print correct tax days based on tax dayMonth selection
-    this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
-      (result: string) => {
-        if(result === 'Jan' || 'Mar' || 'May' || 'Jul' || 'Aug' || 'Oct' || 'Dec'){
-         
-        //Work with formDayDays array that prints days
-        }
-        else if(result === 'Apr' || 'Jun' || 'Sep' || 'Nov'){
-
-
-        }
-        else {
-            //splice array to only print 28 days for February
-        }
       }      
     ); 
-    
   }
+  
+  
+ //Change days on months and leap year
+  onMonthChange() {
 
+    this.monthSelected = this.salaryForm.get('taxDayMonth')?.value;
+    
+    if(this.monthSelected === 'Jan' || 'Mar' || 'May' || 'Jul' || 'Aug' || 'Oct' || 'Dec'){
+      let month31: FormDay[] = FormDay.getDayDay();
+      this.formDayDays = [...month31];
+      
+    }
+    
+     if (this.monthSelected === 'Feb'){
+      let month28: FormDay[] = FormDay.getDayDay();
+      month28.splice(-3)
+      this.formDayDays = [...month28];
+    } 
+     if (this.monthSelected === 'Apr' || 'Jun' || 'Sep' || 'Nov')
+    {
+      let month30: FormDay[] = FormDay.getDayDay();
+      month30.splice(-1);
+      this.formDayDays = [...month30];
+    }
+
+
+ }
+
+  
   //Read id to get salary from service
   getSalary(id: number): void {
     this.salaryService.getSalary(id)
@@ -201,10 +195,30 @@ export class SalaryAddEditComponent implements OnInit {
         this.salary.userId = this.salary.userId;
         this.salary.companyName = this.salaryForm.get('companyName')?.value;
         this.salary.timePeriod = this.salaryForm.get('timePeriod')?.value;
-        this.salary.taxYear = this.salaryForm.get('taxYear')?.value;
-        this.salary.taxMonth = this.salaryForm.get('taxMonth')?.value;
-       // Hier is my probleem
-        this.salary.taxDate.day = this.salaryForm.get('taxDayDay')?.value;
+        
+        this.salary.taxYear = new TaxYear();
+        this.salary.taxMonth = new TaxMonth();
+        this.salary.taxDate = new TaxDate();
+        
+        if(this.salary.timePeriod === TimePeriod.PerTaxYear)
+        {
+          this.salary.taxYear.year = this.salaryForm.get('taxYear')?.value;
+        }
+
+        if(this.salary.timePeriod === TimePeriod.PerMonth){
+          this.salary.taxMonth.month = this.salaryForm.get('taxMonth')?.value;
+        }
+
+        if(this.salary.timePeriod === TimePeriod.PerDay){
+          this.salary.taxDate.day = this.salaryForm.get('taxDayDay')?.value;
+          this.salary.taxDate.month = this.salaryForm.get('taxDayMonth')?.value;
+          this.salary.taxDate.year = this.salaryForm.get('taxDayYear')?.value;
+        }
+
+        this.salary.salaryAmount = this.salaryForm.get('salaryAmount')?.value;
+        this.salary.currencyCode = this.salaryForm.get('currencyCode')?.value;
+
+        console.log(this.salary);
 
         if (this.salary.id === 0) {
           this.salaryService.createSalary(this.salary)
@@ -225,6 +239,7 @@ export class SalaryAddEditComponent implements OnInit {
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     } 
+  }
 
 
 
