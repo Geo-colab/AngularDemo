@@ -91,6 +91,7 @@ export class SalaryListComponent implements OnInit {
   //Delete Salary from service
   deleteSalary(salary: Salary) {
     
+
       if (confirm(`Really delete salary for: ${this.salary.companyName}?`)) {
         this.salaryService.deleteSalary(this.salary.id)
           .subscribe({
@@ -100,6 +101,7 @@ export class SalaryListComponent implements OnInit {
       }
     }
    
+
   ngOnInit(): void {
     this.listFilter = '';
     this.getSalaries();
