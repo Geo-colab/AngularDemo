@@ -219,7 +219,7 @@ export class SalaryAddEditComponent implements OnInit {
       this.errorMessage = 'Please correct the validation errors.';
     } 
 
-
+  }
 
 
   // Reset the form to clear the flags
