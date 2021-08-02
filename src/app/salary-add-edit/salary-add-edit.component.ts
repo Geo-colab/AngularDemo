@@ -194,16 +194,23 @@ export class SalaryAddEditComponent implements OnInit {
   saveSalary(): void {
     if (this.salaryForm.valid) {
       if (this.salaryForm.dirty) {
-        const p = {...this.salary, ...this.salaryForm.value };
+        this.salary.id = this.salary.id;
+        this.salary.userId = this.salary.userId;
+        this.salary.companyName = this.salaryForm.get('companyName')?.value;
+        this.salary.timePeriod = this.salaryForm.get('timePeriod')?.value;
+        this.salary.taxYear = this.salaryForm.get('taxYear')?.value;
+        this.salary.taxMonth = this.salaryForm.get('taxMonth')?.value;
+       // Hier is my probleem
+        this.salary.taxDate.day = this.salaryForm.get('taxDayDay')?.value;
 
-        if (p.id === 0) {
-          this.salaryService.createSalary(p)
+        if (this.salary.id === 0) {
+          this.salaryService.createSalary(this.salary)
             .subscribe({
               next: () => this.onSaveComplete(),
               error: (err: string) => this.errorMessage = err
             });
         } else {
-          this.salaryService.updateSalary(p)
+          this.salaryService.updateSalary(this.salary)
             .subscribe({
               next: () => this.onSaveComplete(),
               error: err => this.errorMessage = err
