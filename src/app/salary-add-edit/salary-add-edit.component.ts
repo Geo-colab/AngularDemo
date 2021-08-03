@@ -128,7 +128,7 @@ export class SalaryAddEditComponent implements OnInit {
         
       }      
     );
-
+    }
     
   
  //Change days on months and leap year
@@ -243,8 +243,6 @@ export class SalaryAddEditComponent implements OnInit {
   onSaveComplete(): void {
     this.salaryForm.reset();
     this.router.navigate(['/salary-list']);
-
-    );
-
+  }
  
 }
