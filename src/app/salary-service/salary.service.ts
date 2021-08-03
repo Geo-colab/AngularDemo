@@ -54,8 +54,6 @@ export class SalaryService {
     return this.http.put<Salary>(url, salary, { headers })
       .pipe(
         tap(() => console.log('updateSalary: ' + salary.id)),
-        // Return the product on an update
-        map(() => salary),
         catchError(this.handleError)
       );
   }

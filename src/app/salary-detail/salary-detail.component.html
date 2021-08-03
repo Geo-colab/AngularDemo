@@ -21,7 +21,17 @@
                   {{salary.companyName}}
                 </a></td>
                 <td>{{salary.timePeriod | timePeriod}}</td>
-                <td>{{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} {{salary?.taxMonth?.month}} {{salary?.taxYear?.year}}</td>
+                <td>
+                  <span *ngIf = "salary.timePeriod.toString() === 'PY' "> 
+                    {{salary?.taxYear?.year}}
+                  </span> 
+                  <span *ngIf = "salary.timePeriod.toString() === 'PM' "> 
+                    {{salary?.taxMonth?.month}}
+                  </span> 
+                  <span *ngIf = "salary.timePeriod.toString() === 'PD' "> 
+                    {{salary?.taxDate?.day}} {{salary?.taxDate?.month}} {{salary?.taxDate?.year}} 
+                  </span> 
+                  </td>
                 <td>{{salary.salaryAmount | currency: salary.currencyCode: 'symbol-narrow'}}</td>   
               </tr>
                

@@ -72,7 +72,6 @@
               <select class="form-control"
                      id="taxMonthId"
                      formControlName="taxMonth"
-                     required
                      [ngClass]="{'is-invalid': (salaryForm.get('taxMonth')!.touched || salaryForm.get('taxMonth')!.dirty) && !salaryForm.get('taxMonth')!.valid }">
                      <option *ngFor="let formMonth of formMonths" [value]="formMonth.value" >Total for {{formMonth.text}}</option>
                   </select>
@@ -103,8 +102,9 @@
               <select class="form-control"
                      id="taxDayMonthId"
                      formControlName="taxDayMonth"
-                     [ngClass]="{'is-invalid': (salaryForm.get('taxDayMonth')!.touched || salaryForm.get('taxDayMonth')!.dirty) && !salaryForm.get('taxDayMonth')!.valid }">
-                     <option *ngFor="let formDayMonth of formDayMonths" [value]="formDayMonth.value">{{formDayMonth.text}}</option>
+                     [ngClass]="{'is-invalid': (salaryForm.get('taxDayMonth')!.touched || salaryForm.get('taxDayMonth')!.dirty) && !salaryForm.get('taxDayMonth')!.valid }"
+                     (change) = "onMonthChange()">
+                     <option *ngFor="let formDayMonth of formDayMonths" [value]="formDayMonth.value" >{{formDayMonth.text}}</option>
                   </select>
                   <span class="btn-sm">
                       Month
