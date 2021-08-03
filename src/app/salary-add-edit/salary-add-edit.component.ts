@@ -12,8 +12,9 @@ import { TaxDate } from '../models/tax-date.model';
 import { TaxMonth } from '../models/tax-month.model';
 import { TaxYear } from '../models/tax-year.model';
 import { TimePeriod } from '../models/time-period.enum';
+import { LoaderService } from '../services/loader.service';
 
-import { SalaryService } from '../salary-service/salary.service';
+import { SalaryService } from '../services/salary.service';
 
 
 @Component({
@@ -49,7 +50,8 @@ export class SalaryAddEditComponent implements OnInit {
   constructor (private fb: FormBuilder,
                private router: Router,
                private route: ActivatedRoute,
-               private salaryService: SalaryService) { }
+               private salaryService: SalaryService,
+               private loaderService: LoaderService) { }
 
   ngOnInit(): void {
 
@@ -171,6 +173,7 @@ export class SalaryAddEditComponent implements OnInit {
     if (this.salaryForm) {
       this.salaryForm.reset();
     }
+    this.loaderService.requestEnded();
     this.salary = salary;
 
     if (this.salary.id === 0) {
@@ -181,7 +184,7 @@ export class SalaryAddEditComponent implements OnInit {
 
     //Update data on the form
     this.createFrom();
-    
+    this.loaderService.requestEnded();
   }
   
   //Create or update salary on save
@@ -243,6 +246,7 @@ export class SalaryAddEditComponent implements OnInit {
   onSaveComplete(): void {
     this.salaryForm.reset();
     this.router.navigate(['/salary-list']);
+    this.loaderService.requestEnded();
   }
  
 }

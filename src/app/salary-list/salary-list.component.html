@@ -68,12 +68,24 @@
             </tr>     
           </tbody>
         </table>
+        <div>
         <button class="btn btn-outline-primary"
         [routerLink]="['/salary-add-edit/0/edit']">Add New</button>
+        </div>
       </div >
-
-      <div *ngIf = 'showDetails'>
+      </div>
+      <div>
+      <span *ngIf = 'showDetails'>
         <ad-salary-detail [salary] = 'salary' (delSalary) = 'deleteSalary($event)'></ad-salary-detail>
+      </span>
+      </div>
+      <div>
+      <div class="alert alert-success" role="alert" *ngIf = "deleteMessage">
+        Salary Successfully Deleted.
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf = 'errorMessage'>
+        A problem was encountered when deleting the salary. Please try again.
+      </div>
       </div>
 
     </div>

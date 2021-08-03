@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Salary } from '../models/salary.model';
-import { SalaryService } from '../salary-service/salary.service';
+import { LoaderService } from '../services/loader.service';
+import { SalaryService } from '../services/salary.service';
 
 @Component({
   selector: 'ad-salary-list',
@@ -11,7 +12,8 @@ import { SalaryService } from '../salary-service/salary.service';
 export class SalaryListComponent implements OnInit {
   
   title: string = "Salary List";
-  errorMessage = '';
+  deleteMessage: boolean = false;
+  errorMessage: boolean = false;
   dayFilter: string = 'Day'
   monthFilter: string = ''
  
@@ -34,7 +36,8 @@ export class SalaryListComponent implements OnInit {
   filteredSalaries: Salary[] = [];
   
 
-  constructor(private salaryService: SalaryService) { }
+  constructor(private salaryService: SalaryService,
+              private loaderService: LoaderService) { }
 
   //Get and set list fiters
   performFilter(filterBy: string): Salary[] {
@@ -82,8 +85,10 @@ export class SalaryListComponent implements OnInit {
     this.salaryService.getSalaries().subscribe({
       next: salaries => {
         this.salaries = salaries; 
-        this.filteredSalaries = [...this.salaries];              
+        this.filteredSalaries = [...this.salaries];
+        this.onGetSalaries();              
       },
+     
       error: err => this.errorMessage = err
     });
   }
@@ -96,7 +101,7 @@ export class SalaryListComponent implements OnInit {
         this.salaryService.deleteSalary(this.salary.id)
           .subscribe({
             next: () => this.onDeleteComplete(),
-            error: err => this.errorMessage = err
+            error: err => this.errorMessage = true
           });
       }
     }
@@ -107,11 +112,19 @@ export class SalaryListComponent implements OnInit {
     this.getSalaries();
   }
   
+  //Stop loader when salaries are retrieved
+  onGetSalaries() {
+  this.loaderService.requestEnded();
+  }
+  
   //Reload salaries once deletion is complete
   onDeleteComplete() {
   
     this.getSalaries();
     this.showDetails = false;
+    this.loaderService.requestEnded();
+    this.deleteMessage = true;
+
        
   }
 
