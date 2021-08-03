@@ -7,10 +7,12 @@ import { FormMonth } from '../models/form-month.model';
 import { FormPeriod } from '../models/form-period.model';
 import { FormYear } from '../models/form-year.model';
 import { Salary } from '../models/salary.model';
+
 import { TaxDate } from '../models/tax-date.model';
 import { TaxMonth } from '../models/tax-month.model';
 import { TaxYear } from '../models/tax-year.model';
 import { TimePeriod } from '../models/time-period.enum';
+
 import { SalaryService } from '../salary-service/salary.service';
 
 
@@ -43,11 +45,6 @@ export class SalaryAddEditComponent implements OnInit {
   formDayDays: FormDay[] = FormDay.getDayDay();
   formDayMonths: FormDay[] = FormDay.getDayMonth();
   formDayYears: FormDay[] = FormDay.getDayYear();
-
-  //Arrays to keep days options and leap year
-  days: string[] = [];
-  months: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'];
-  years: string[] = [];
   
   constructor (private fb: FormBuilder,
                private router: Router,
@@ -90,7 +87,7 @@ export class SalaryAddEditComponent implements OnInit {
     })
 
     //Set Validators for taxYear and remove Vaidators and values for other time periods
-   this.subForm = this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
+    this.subForm = this.salaryForm.get('timePeriod')?.valueChanges.subscribe(
       (result: string) => {
         if(result === 'PY'){
           this.salaryForm.get('taxYear')?.setValidators(Validators.required);
@@ -103,7 +100,7 @@ export class SalaryAddEditComponent implements OnInit {
           this.salaryForm.get('taxDayMonth')?.setValue('');
           this.salaryForm.get('taxDayYear')?.setValue('');
         }
-        if(result === 'PM'){
+         if(result === 'PM'){
           this.salaryForm.get('taxYear')?.clearValidators();
           this.salaryForm.get('taxMonth')?.setValidators(Validators.required); 
           this.salaryForm.get('taxDayDay')?.clearValidators();
@@ -114,7 +111,7 @@ export class SalaryAddEditComponent implements OnInit {
           this.salaryForm.get('taxDayMonth')?.setValue('');
           this.salaryForm.get('taxDayYear')?.setValue('');
         }
-        if(result === 'PD'){
+         if(result === 'PD'){
           this.salaryForm.get('taxYear')?.clearValidators()
           this.salaryForm.get('taxMonth')?.clearValidators(); 
           this.salaryForm.get('taxDayDay')?.setValidators(Validators.required);
@@ -123,16 +120,16 @@ export class SalaryAddEditComponent implements OnInit {
           this.salaryForm.get('taxYear')?.setValue('');
           this.salaryForm.get('taxMonth')?.setValue('');
         }
-
         this.salaryForm.get('taxYear')?.updateValueAndValidity();
         this.salaryForm.get('taxMonth')?.updateValueAndValidity();
         this.salaryForm.get('taxDayDay')?.updateValueAndValidity();
         this.salaryForm.get('taxDayMonth')?.updateValueAndValidity();
         this.salaryForm.get('taxDayYear')?.updateValueAndValidity();
+        
       }      
-    ); 
-  }
-  
+    );
+
+    
   
  //Change days on months and leap year
   onMonthChange() {
@@ -242,14 +239,12 @@ export class SalaryAddEditComponent implements OnInit {
   }
 
 
-
-
   // Reset the form to clear the flags
   onSaveComplete(): void {
     this.salaryForm.reset();
     this.router.navigate(['/salary-list']);
-  }
- 
+
+    );
 
  
 }
