@@ -12,6 +12,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { SalaryData } from './salary-data/salary-data';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SalaryData } from './salary-data/salary-data';
     WelcomeComponent,
     SalaryDetailComponent,
     TimePeriodPipe,
-    SalaryAddEditComponent, 
+    SalaryAddEditComponent,
+    LoaderComponent, 
   ],
   imports: [
     BrowserModule,
